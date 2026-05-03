@@ -40,13 +40,25 @@ public class OrdersEndpointTests
     {
         // Arrange
         // TODO: criar RestRequest("/api/orders", Method.Get)
+        Arrange 
+        var request = new RestRequest("/api/orders", Method.Get);
+
+
+        
+
 
         // Act
         // TODO: response = await _client.ExecuteAsync(request)
+           Act
+           var response = await_client.ExecuteAsync(request);
 
         // Assert
         // TODO: response.StatusCode.Should().Be(HttpStatusCode.OK)
         //       response.Content.Should().NotBeNull()
+
+        Assert
+        response.StatusCode.Should().Be(HttpStatusCode.ok);
+        response.Content.Should().NotBenull();
         Assert.Fail("Implementar teste — remover quando concluir.");
     }
 
@@ -55,12 +67,27 @@ public class OrdersEndpointTests
     {
         // Arrange
         // TODO: montar payload anônimo:
-        //   new { customerName = "Maria", items = new[] {
+        //   new { customerName = "Ma;ria", items = new[] {
         //       new { productId = 1, productName = "Mouse", unitPrice = 50, quantity = 2 }
         //   }, discountRate = 0.1 }
+        Arrange 
+        var payload = new
+        { customerName ="Maria", items = new[]
+        {
+            new {productId = 1, productName = "Mouse", unitprice = 50, quanty=2}
+        }, discountRate =0.1};
+        var request = new RestRequest("/api/ordens", method.post);
+        rrequest.AddJsonBody(payload);
+        }
+        };
+        
 
         // Act
         // TODO: enviar POST com AddJsonBody(payload)
+     Act 
+     post addJsonBody(payload);
+     var res
+
 
         // Assert
         // TODO: response.StatusCode.Should().Be(HttpStatusCode.Created);
