@@ -74,4 +74,31 @@ public class OrderServiceTests
         mockRepo.Verify(r => r.Save(It.IsAny<Order>()), Times.Never);
     }
 
+    // ---------------------------------------------------------------
+    //  BÔNUS — PlaceOrder válido chama Save uma vez e calcula Total
+    // ---------------------------------------------------------------
+    [Fact(DisplayName = "PlaceOrder: pedido válido salva e retorna Total calculado")]
+    public void PlaceOrder_WithValidItems_CallsSaveOnceAndReturnsTotal()
+    {
+        // Arrange
+        var mockRepo = new Mock<IOrderRepository>();
+        var service  = new OrderService(mockRepo.Object);
+
+        var request = new PlaceOrderRequest
+        {
+            CustomerName = "Maria",
+            Items = new List<OrderItem>
+            {
+                new() { ProductId = 1, ProductName = "Mouse", UnitPrice = 50m, Quantity = 2 }
+            },
+            DiscountRate = 0.10m  // 10% de desconto → 100 * 0.9 = 90
+        };
+
+        // Act
+        var order = service.PlaceOrder(request);
+
+        // Assert
+        order.Total.Should().Be(90m);
+        mockRepo.Verify(r => r.Save(It.IsAny<Order>()), Times.Once);
     }
+}
